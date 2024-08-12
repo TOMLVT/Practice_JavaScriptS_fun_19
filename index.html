@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+</head>
+<body>
+    
+    <div class="container">
+        <form id="myForm"> 
+           <div class="form_login" id="BodyFormUser">
+                  <h4>Nhập thông tin vào form</h4>
+
+                  <div class="form_input_small">
+                     <div class="container_input">
+                        <label for="userName">Nhập tên người dùng</label>
+                        <input type="text" id="userName" class="input_small" placeholder="Nhập tên..." onkeyup="validateName()">
+                        <span class="span_note" id="nameError"></span>
+                     </div>
+
+                     <div class="container_input">
+                        <label for="userPhone">Nhập số điện thoại</label>
+                        <input type="text" id="userPhone" class="input_small" placeholder="Nhập SĐT..." onkeyup="validateNumber()">
+                        <span class="span_note" id="numberError"></span>
+                     </div>
+
+                     <div class="container_input">
+                        <label for="userEmail">Nhập Email</label>
+                        <input type="email" id="userEmail" class="input_small" placeholder="Nhập Email..." onkeyup="validateEmail()">
+                        <span class="span_note" id="emailError"></span>
+                     </div>
+
+                     <div class="container_input">
+                        <label for="userPassords">Nhập mật khẩu</label>
+                        <div class="body_input_icon">
+                            <input type="password" id="userPassords" class="input_small" placeholder="Nhập mật khẩu..." onkeyup="validatePassword()">
+                           <span class="span_icon_small"> <i class="fa-solid fa-eye-slash" id="iconEyePassword" onclick="togglePasswordVisibility()"></i></span>
+                        </div>
+                        <span class="span_note" id="passwordError"></span>           
+                     </div>
+
+                     <div class="container_input">
+                        <label for="userText">Nhập phản hồi</label>
+                        <textarea  id="userText" rows="5" class="input_text" placeholder="Nhập phản hồi..."  onkeyup="validateText()"></textarea>
+                        <span class="span_note" id="textError"></span>
+                     </div>
+
+                     <div class="container_button">
+                        <button type="submit" class="btn_submit" onclick="return validateButtonSubmit()">Gửi thông tin</button>
+                        <span id="submit-error" class="span_note_text"></span>
+                     </div>
+                     
+                  </div>
+           </div>
+           <!--thông báo khi hoàn thành form -->
+           <div class="popup" id="PopupAlert">
+            <img src="assets/image/404-tick.png" alt="">
+            <h3>Xác nhận thành công</h3>
+            <p class="des_small">Cảm ơn bạn đã sử dụng dịch vụ chúng tôi!</p>
+            <button type="button" onclick="ClosePopup()">OK</button>
+        </div>
+        </form>
+    </div>
+
+    <script>
+            var userNameError = document.getElementById('nameError')
+            var userPhoneError = document.getElementById('numberError')
+            var userEmailError = document.getElementById('emailError')
+            var userPasswordError = document.getElementById('passwordError')
+            var userTextError = document.getElementById('textError')
+            var userSubmitError = document.getElementById('submit-error')
+            var popups = document.getElementById('PopupAlert')
+            var bodyForms = document.getElementById('BodyFormUser')
+
+            function validateName() {
+                var namesUser = document.getElementById('userName').value
+                if (namesUser.length == 0) {
+                    userNameError.innerHTML = 'Tên người dùng không được trống!'
+                    return false
+                }
+
+                let stringUserName = /^[A-Za-z]*\s{1}[A-Za-z]*$/
+                if (!namesUser.match(stringUserName)) {
+                    userNameError.innerHTML = 'Tên người dùng chưa hợp lệ!'
+                    return false
+                }
+                userNameError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+                return true
+            }
+            
+            function validateNumber() {
+                var userNumber = document.getElementById('userPhone').value
+                if (userNumber.length == 0) {
+                    userPhoneError.innerHTML = 'Số điện thoại không được trống!'
+                    return false
+                }
+                let stringNumber = /^[0-9]{10}$/
+                if (!userNumber.match(stringNumber)) {
+                    userPhoneError.innerHTML = 'Số chưa hợp lệ!'
+                    return false
+                }
+                userPhoneError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+                return true
+            }
+
+            function validateEmail() {
+                var userEmails = document.getElementById('userEmail').value
+                if (userEmails.length == 0) {
+                    userEmailError.innerHTML = 'Email không được để trống!'
+                    return false
+                }
+
+                let stringEmail = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+                if (!userEmails.match(stringEmail)) {
+                    userEmailError.innerHTML = 'Email chưa hợp lệ!'
+                    return false
+                }
+                userEmailError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+                return true
+            }
+
+            function validatePassword() {
+    let userPassword = document.getElementById('userPassords').value
+    let passwordInput = document.getElementById('userPassords')
+    let strengthMessage = '';
+
+    if (userPassword.length == 0) {
+        strengthMessage = 'Mật khẩu không được trống!';
+        passwordInput.style.borderColor = 'red';
+        userPasswordError.style.color = 'red';
+    } else if (userPassword.length < 4) {
+        strengthMessage = 'Mật khẩu yếu!';
+        passwordInput.style.borderColor = 'red';
+        userPasswordError.style.color = 'red';
+    } else if (userPassword.length < 8) {
+        strengthMessage = 'Mật khẩu trung bình!';
+        passwordInput.style.borderColor = 'orange';
+        userPasswordError.style.color = 'orange';
+    } else {
+        strengthMessage = 'Mật khẩu an toàn!';
+        passwordInput.style.borderColor = 'green';
+        userPasswordError.style.color = 'green';
+    }
+    
+    userPasswordError.innerHTML = strengthMessage;
+    if (userPassword.length >= 4) {
+        userPasswordError.innerHTML += ' <i class="fa-solid fa-circle-check"></i>';
+    }
+    
+    return userPassword.length >= 4;
+}
+
+            function togglePasswordVisibility() {
+            let passwordInput = document.getElementById('userPassords');
+            let iconEyePassword = document.getElementById('iconEyePassword');
+    // ẩn và xem mật khẩu 
+    if (passwordInput.type === 'password') {
+        passwordInput.type = 'text'
+        iconEyePassword.classList.remove('fa-eye-slash')
+        iconEyePassword.classList.add('fa-eye')
+    } else {
+        passwordInput.type = 'password'
+        iconEyePassword.classList.remove('fa-eye')
+         iconEyePassword.classList.add('fa-eye-slash')
+     }
+        }
+            function validateText() {
+                var userTextRespon = document.getElementById('userText').value
+                let lengthTextRequired = 25
+                let LengthEnterText = lengthTextRequired - userTextRespon.length
+
+                if (LengthEnterText > 0 ) {
+                    userTextError.innerHTML = 'Phải nhập đủ độ dài ' + lengthTextRequired + ' còn ' + LengthEnterText + ' ký tự!'
+                    return false
+                }
+                userTextError.innerHTML = '<i class="fa-solid fa-circle-check"></i>'
+                return true
+            }
+
+            function validateButtonSubmit() {
+                if (!validateName() || !validateEmail() || !validateNumber() || !validatePassword() || !validateText()) {
+                    userSubmitError.innerHTML = 'Vui lòng nhập đủ thông tin!'
+                    setTimeout(() => {
+                        userSubmitError.style.display = 'none'
+                    }, 2500)
+                    return false
+                } else {
+                    popups.classList.add('open-popup')
+                    bodyForms.style.display = 'none'
+                    return false
+                }
+            }
+
+            function ClosePopup() {
+                popups.classList.remove('open-popup')
+                bodyForms.style.display = 'block'
+                document.getElementById('myForm').reset() // Reset form sau khi gửi
+            }
+    </script>
+</body>
+</html>
