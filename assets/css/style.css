@@ -25,6 +25,7 @@ h4 {
     border-bottom: 1px solid #3c5077;
     padding: 10px ;
 }
+
 .span_note {
     position: absolute;
     top: 0;
@@ -34,9 +35,12 @@ h4 {
     font-size: 13px;
 }
 .form_login {
-    width: 530px;
+    max-width: 100%;
     background-color: #fff;
     padding: 30px;
+}
+#myForm {
+    width: 500px;
 }
 i {
     color:green;
@@ -140,7 +144,10 @@ i {
     border-radius: 4px;
     cursor: pointer;
 }
-
+label {
+    font-size: 13px;
+    color: grey;
+}
 #iconEyePassword {
     color: #333;
 }
@@ -160,3 +167,31 @@ i {
     cursor: pointer;
 }
 
+.class_load_ps i {
+    color: #333;
+    cursor: pointer;
+}
+
+@media (max-width: 480px) {
+    .form_login {
+        padding: 10px;
+    }
+   
+    h4 {
+        font-size: 18px;
+    }
+    .span_note {
+        font-size: 11px;
+    }
+    .input_small, .input_text {
+        height: 35px;
+    }
+
+    .popup img {
+        width: 70px;
+    }
+
+    .popup h2 {
+        font-size: 22px;
+    }
+}

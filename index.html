@@ -34,7 +34,10 @@
                      </div>
 
                      <div class="container_input">
+                       <div class="container_label">
                         <label for="userPassords">Nhập mật khẩu</label>
+                        <span class="class_load_ps"><i class="fa-solid fa-rotate" onclick="createPassword()"></i></span>
+                       </div>
                         <div class="body_input_icon">
                             <input type="password" id="userPassords" class="input_small" placeholder="Nhập mật khẩu..." onkeyup="validatePassword()">
                            <span class="span_icon_small"> <i class="fa-solid fa-eye-slash" id="iconEyePassword" onclick="togglePasswordVisibility()"></i></span>
@@ -74,6 +77,8 @@
             var userSubmitError = document.getElementById('submit-error')
             var popups = document.getElementById('PopupAlert')
             var bodyForms = document.getElementById('BodyFormUser')
+            var createPasswords = document.getElementById('userPassords')
+
 
             function validateName() {
                 var namesUser = document.getElementById('userName').value
@@ -167,6 +172,35 @@
          iconEyePassword.classList.add('fa-eye-slash')
      }
         }
+
+        //Random password 
+        const lengthPassword  = 12
+
+        const toupperCase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        const toLowerCase = "abcdefghijklmnopqrstuvwxyz"
+        const number =  "0123456789"
+        const symbol = "@#$%^&*()_+|}{></-="
+
+        const allChars = toupperCase + toLowerCase + number + symbol
+
+        function createPassword() {
+            let passworduser = ""
+            passworduser += toupperCase[Math.floor(Math.random() * toupperCase.length)]
+            passworduser += toLowerCase[Math.floor(Math.random() * toLowerCase.length)]
+            passworduser += number[Math.floor(Math.random() * number.length)]
+            passworduser += symbol[Math.floor(Math.random() * symbol.length)]
+
+            while (lengthPassword > passworduser.length) {
+                passworduser += allChars[Math.floor(Math.random() * allChars.length)]
+            }
+            createPasswords.value = passworduser
+        }
+        
+
+
+
+
+        //-----------------------
             function validateText() {
                 var userTextRespon = document.getElementById('userText').value
                 let lengthTextRequired = 25
@@ -199,6 +233,8 @@
                 bodyForms.style.display = 'block'
                 document.getElementById('myForm').reset() // Reset form sau khi gửi
             }
+
+
     </script>
 </body>
 </html>
